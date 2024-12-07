@@ -1,0 +1,17 @@
+/* Resetting some default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Make all headers white */
+h1, h2, h3, h4, h5, h6 {
+  color: white;
+}
+
+/* Optional: Set a background color for the body */
+body {
+  background-color: #000; /* Black background */
+  color: white; /* Default text color */
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Watch Movie</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Responsive iframe container with width scaling */
+    .iframe-container {
+      position: relative;
+      width: 100%;
+      background-color: #000;
+      margin-bottom: 20px;
+      margin-top: 20px;
+    }
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 56.25vw; /* 16:9 aspect ratio based on width */
+      border: none;
+      border-radius: 8px;
+    }
+
+    /* Adjust for tablets and smaller screens */
+    @media (max-width: 768px) {
+      iframe {
+        height: 75vw; /* Adjust aspect ratio for smaller screens */
+      }
+    }
+
+    @media (max-width: 480px) {
+      iframe {
+        height: 85vw; /* Adjust even more for very small screens */
+      }
+    }
+
+    /* Ensuring button spacing is good */
+    .back-button {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-neon-green font-sans">
+  <header class="p-6 text-center border-b border-cyan-400">
+    <h1 class="text-3xl font-bold">Now Playing</h1>
+    <p id="movie-title" class="text-lg mt-2"></p>
+  </header>
+
+  <button 
+  onclick="goBack()" 
+  class="back-button bg-cyan-600 text-white px-6 py-2 rounded-lg hover:bg-cyan-400 transition-all"
+>
+  Back to Details
+</button>
+</main>
+
+  
+  <main class="p-6 flex flex-col items-center">
+    <!-- Movie Player -->
+    <div class="iframe-container">
+      <iframe 
+        id="player" 
+        src="" 
+        allowfullscreen
+      ></iframe>
+    </div>
+
+    <!-- Back Button -->
+
+  <script>
+    // Retrieve IMDb ID from the URL
+    const params = new URLSearchParams(window.location.search);
+    const imdbID = params.get('id');
+
+    // Set up iframe source and title
+    if (imdbID) {
+      const player = document.getElementById('player');
+      const titleElement = document.getElementById('movie-title');
+      player.src = `https://sakshamchugh.com/movies-api/?id=${imdbID}`;
+      titleElement.textContent = `Now Playing: ${imdbID}`;
+    } else {
+      document.body.innerHTML = `
+        <div class="p-6 text-center text-red-500">
+          <h1 class="text-2xl font-bold">Error</h1>
+          <p>No movie ID provided. Please go back and select a movie.</p>
+        </div>
+      `;
+    }
+
+    // Back button functionality
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+
+
+</body>
+</html>
