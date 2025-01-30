@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Details</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-black text-white font-sans">
+  <header class="p-6 text-center border-b border-cyan-400 animate-fadeIn">
+    <h1 class="text-4xl font-extrabold neon-glow">🎬 Movie Details</h1>
+  </header>
+
+  <main class="p-6 flex flex-col items-center">
+    <h2 id="movie-title" class="text-3xl font-bold mb-4 animate-slideIn"></h2>
+    <img id="movie-poster" src="" alt="Movie Poster" class="rounded-lg mb-4 shadow-lg transition-transform duration-300 hover:scale-110">
+    <p id="movie-about" class="mb-2 fade-in"></p>
+    <p id="movie-rating" class="mb-2"></p>
+    <p id="movie-release" class="mb-4"></p>
+    
+    <div class="flex gap-4">
+      <button 
+        onclick="redirectToPlayer('myServer')" 
+        class="glow-button"
+      >
+        ▶️ Watch Now
+      </button>
+      <a id="third-party-1" href="#" target="_blank" class="glow-button">
+        🔗 Server 1
+      </a>
+      <a id="third-party-2" href="#" target="_blank" class="glow-button">
+        🔗 Server 2
+      </a>
+    </div>
+  </main>
+
+  <script>
+    const movieData = JSON.parse(localStorage.getItem('movieData'));
+    document.getElementById('movie-title').textContent = movieData.Title;
+    document.getElementById('movie-poster').src = movieData.Poster;
+    document.getElementById('movie-about').textContent = movieData.Plot;
+    document.getElementById('movie-rating').textContent = `⭐ Rating: ${movieData.imdbRating}`;
+    document.getElementById('movie-release').textContent = `📅 Released: ${movieData.Released}`;
+
+    function redirectToPlayer(server) {
+      const url = server === 'myServer' ? `player.html?id=${movieData.imdbID}` : '#';
+      window.location.href = url;
+    }
+  </script>
+</body>
+</html>

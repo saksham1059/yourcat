@@ -1,0 +1,58 @@
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes neonGlow {
+  0% { text-shadow: 0 0 5px cyan, 0 0 10px cyan; }
+  50% { text-shadow: 0 0 10px cyan, 0 0 20px cyan; }
+  100% { text-shadow: 0 0 5px cyan, 0 0 10px cyan; }
+}
+
+/* Glassmorphism Effect */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 16px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.glass-card:hover {
+  transform: scale(1.05);
+}
+
+/* Neon Effects */
+.neon-glow {
+  animation: neonGlow 2s infinite alternate;
+}
+
+/* Buttons */
+.glow-button {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+  background: linear-gradient(90deg, cyan, blue);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.glow-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px cyan;
+}
+
+/* Dark mode */
+body {
+  background-color: #000;
+  color: white;
+}

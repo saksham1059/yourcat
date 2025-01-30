@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hikashow</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-black text-white font-sans">
+  <header class="p-6 text-center border-b border-cyan-400 animate-fadeIn">
+    <h1 class="text-4xl font-bold neon-glow">Hikashow</h1>
+    <p class="text-lg">🎬 Discover Movies & Shows 🍿</p>
+  </header>
+
+  <main class="p-6">
+    <!-- Search Section -->
+    <div class="mb-6 text-center animate-slideIn">
+      <input 
+        id="search-bar" 
+        type="text" 
+        placeholder="Search movies..." 
+        class="bg-gray-800 text-white p-4 rounded-lg w-full outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
+      />
+      <button 
+        onclick="searchMovies()" 
+        class="glow-button mt-3"
+      >
+        🔍 Search
+      </button>
+    </div>
+
+    <!-- Movie Results -->
+    <div id="results" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </main>
+
+  <script>
+    const apiKey = "19340f98";
+
+    async function searchMovies() {
+      const query = document.getElementById("search-bar").value.trim();
+      if (!query) return alert("Please enter a movie name.");
+
+      const res = await fetch(`https://www.omdbapi.com/?s=${query}&apikey=${apiKey}`);
+      const data = await res.json();
+
+      const results = document.getElementById("results");
+      results.innerHTML = "";
+
+      if (data.Response === "True") {
+        results.innerHTML = data.Search.map(movie => `
+          <div class="relative bg-gray-800 text-white rounded-lg shadow-lg overflow-hidden hover:scale-105 transition-transform animate-fadeIn">
+            <!-- Movie Poster -->
+            <img src="${movie.Poster}" alt="${movie.Title}" class="w-full h-auto rounded-lg">
+
+            <!-- Movie Rating (Top Left) -->
+            <div class="absolute top-2 left-2 bg-yellow-400 text-black font-bold px-3 py-1 rounded-md shadow-md">
+              ⭐ ${movie.imdbRating || 'N/A'}
+            </div>
+
+            <!-- Movie Release Date (Top Right) -->
+            <div class="absolute top-2 right-2 bg-yellow-400 text-black font-bold px-3 py-1 rounded-md shadow-md">
+              📅 ${movie.Year}
+            </div>
+
+            <!-- Movie Title & Button -->
+            <div class="p-4 text-center">
+              <h3 class="text-lg font-bold">${movie.Title}</h3>
+              <button onclick="viewDetails('${movie.imdbID}')" class="glow-button mt-2">
+                🎬 Details
+              </button>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        results.innerHTML = `<p class="text-center text-red-500">No results found for "${query}".</p>`;
+      }
+    }
+
+    function viewDetails(imdbID) {
+      fetch(`https://www.omdbapi.com/?i=${imdbID}&apikey=${apiKey}`)
+        .then(res => res.json())
+        .then(movie => {
+          localStorage.setItem('movieData', JSON.stringify(movie));
+          window.location.href = 'moviedetail.html';
+        });
+    }
+  </script>
+</body>
+</html>

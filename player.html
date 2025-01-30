@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Watch Movie</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-black text-white font-sans">
+  <header class="p-6 text-center border-b border-cyan-400 animate-fadeIn">
+    <h1 class="text-4xl font-extrabold neon-glow">🎥 Now Playing</h1>
+    <p id="movie-title" class="text-lg mt-2 fade-in"></p>
+  </header>
+
+  <main class="p-6 flex flex-col items-center">
+    <div class="iframe-container animate-fadeIn">
+      <iframe id="player" src="" allowfullscreen></iframe>
+    </div>
+    <button onclick="goBack()" class="glow-button mt-4">🔙 Back</button>
+  </main>
+
+  <script>
+    const movieData = JSON.parse(localStorage.getItem('movieData'));
+
+    if (movieData) {
+      document.getElementById('player').src = `https://sakshamchugh.com/movies-api/?id=${movieData.imdbID}`;
+      document.getElementById('movie-title').textContent = `🎬 Now Playing: ${movieData.Title}`;
+    } else {
+      document.body.innerHTML = `
+        <div class="p-6 text-center text-red-500 animate-fadeIn">
+          <h1 class="text-2xl font-bold">Error</h1>
+          <p>No movie data found. Please go back and select a movie.</p>
+        </div>
+      `;
+    }
+
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+</body>
+</html>
