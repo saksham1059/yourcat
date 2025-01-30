@@ -6,6 +6,24 @@
   <title>Watch Movie</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Responsive iframe container with improved resolution */
+    .iframe-container {
+      position: relative;
+      width: 100%;
+      max-width: 1280px; /* Limit max width for better scaling */
+      aspect-ratio: 16 / 9; /* Maintain 16:9 aspect ratio */
+      background-color: #000;
+      margin: 20px auto;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body class="bg-black text-white font-sans">
   <header class="p-6 text-center border-b border-cyan-400 animate-fadeIn">
@@ -24,7 +42,7 @@
     const movieData = JSON.parse(localStorage.getItem('movieData'));
 
     if (movieData) {
-      document.getElementById('player').src = `https://sakshamchugh.com/movies-api/?id=${movieData.imdbID}`;
+      document.getElementById('player').src = `https://sakshamchugh.com/movies-api/?id=${movieData.imdbID}&quality=high`;
       document.getElementById('movie-title').textContent = `🎬 Now Playing: ${movieData.Title}`;
     } else {
       document.body.innerHTML = `
